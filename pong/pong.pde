@@ -28,8 +28,8 @@ class PongPaddle {
   
   void draw() {
     fill(255 ) ;
-    rect(0 , height/2 -80 , 30,160) ;
-    rect(width -30 , height/2 -80 , 30,160) ;
+    rect(0 , mouseY , 30,160) ;
+    rect(width -30 , mouseY , 30,160) ;
     
   }
   
