@@ -12,6 +12,7 @@ void draw() {
   rect(width/2-5,0,10,height) ;
   paddle.draw() ;
   ball.draw() ;
+  ball.move() ;
 }
 
 
@@ -39,20 +40,19 @@ class PongPaddle {
 }
 
 class PongBall {
-  float posX = 350 , posY = 250 , size = 50 , velocity_X , velocity_Y ;
+  float posX = 350 , posY = 250 , size = 50 , velocity_X = 5 , velocity_Y ;
   
   PongBall(){
-    this.posX = posX ; 
-    this.posY = posY ;
-    this.size = size ;
-    this.velocity_X = velocity_X ;
-    this.velocity_Y = velocity_Y ;
 
   }
   
   void move() {
-  //incoming
+    posX = posX + velocity_X ;
     
+    if (posX > width-size || posX < 0+size) {
+      velocity_X = velocity_X * (-1.1) ;
+    }
+  
   }
   
   void draw() {
