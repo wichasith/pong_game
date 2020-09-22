@@ -1,5 +1,5 @@
 PongPaddle paddle = new PongPaddle(0,0,0) ;
-
+PongBall ball = new PongBall() ;
 void setup() {
   size(700,500) ; 
   
@@ -7,10 +7,11 @@ void setup() {
 }
 
 void draw() {
+  noStroke() ;
   background(0) ;
-  rect(width/2,0,10,height) ;
+  rect(width/2-5,0,10,height) ;
   paddle.draw() ;
-  
+  ball.draw() ;
 }
 
 
@@ -38,9 +39,9 @@ class PongPaddle {
 }
 
 class PongBall {
-  float posX , posY , size = 50 , velocity_X , velocity_Y ;
+  float posX = 350 , posY = 250 , size = 50 , velocity_X , velocity_Y ;
   
-  PongBall(float posX , float posY , float size , float velocity_X , float velocity_Y){
+  PongBall(){
     this.posX = posX ; 
     this.posY = posY ;
     this.size = size ;
