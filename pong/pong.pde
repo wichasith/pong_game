@@ -49,12 +49,12 @@ class PongPaddle {
   }
 
   void click_to_move() {
-    if (dist(posX, 0, mouseX, 0 ) < size ) {
+    if (dist(posX, 0, mouseX, 0 ) < width/2 ) {
       if (mousePressed) {
         posY = mouseY ;
       }
     }
-    if (dist(posX, 0, mouseX, 0 ) > width - size ) {
+    if (dist(posX, 0, mouseX, 0 ) > width/2 ) {
       if (mousePressed) {
         posY = mouseY ;
       }
@@ -103,27 +103,25 @@ class PongBall {
 
 
 class PongGame {
-  int score_player1 = 0 , score_player2 = 0 ;
+  int score_player1 = 0, score_player2 = 0 ;
 
   PongGame() {
   }
 
 
   void update() {
-    if (ball.get_ball_X() == 0 ){
+    if (ball.get_ball_X() == 0 ) {
       score_player2 += 1 ;
-      
     }
-    if (ball.get_ball_X() == width ){
+    if (ball.get_ball_X() == width ) {
       score_player1 += 1 ;
-      
     }
   }
 
 
   void draw() {
     textSize(50) ;
-    text(score_player1 , 150, 100 ) ;
-    text(score_player2 , 500, 100 ) ;
+    text(score_player1, 150, 100 ) ;
+    text(score_player2, 500, 100 ) ;
   }
 }
