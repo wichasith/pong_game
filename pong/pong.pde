@@ -1,6 +1,6 @@
 
-PongPaddle paddle1 = new PongPaddle() ;
-PongPaddle paddle2 = new PongPaddle() ;
+PongPaddle paddle1 = new PongPaddle(1) ;
+PongPaddle paddle2 = new PongPaddle(2) ;
 PongBall ball = new PongBall() ;
 PongGame game = new PongGame() ;
 void setup() {
@@ -22,14 +22,17 @@ void draw() {
   ball.move() ;
   game.draw() ;
   game.update() ;
+  paddle1.bounce_ball() ;
+  paddle2.bounce_ball() ;
 }
 
 
 class PongPaddle {
-  float posX, posY, size = 30, velocity_X = 5;
+  float posX, posY, size = 30, velocity_X = 5 , num ;
 
-  PongPaddle() {
+  PongPaddle(int a) {
     posY = height+80 ;
+    num = a ;
   }
 
   void draw(float posX, float size, float point ) {
@@ -40,9 +43,14 @@ class PongPaddle {
   }
 
   void bounce_ball() {
-    if (posX < ball.get_ball_X() &&  posX+80 > ball.get_ball_X()  && posY < ball.get_ball_Y() && posY+200 > ball.get_ball_Y()) {
-      velocity_X = velocity_X * (-1.1) ;
-    }
+    //if(ball.get_ball_X() < width/2){
+    if (posX < ball.get_ball_X() &&  posX+30 > ball.get_ball_X()  && posY < ball.get_ball_Y() && posY+160 > ball.get_ball_Y()) {
+      velocity_X = velocity_X * (-1) ;
+    }//}
+    //if(ball.get_ball_X() > width/2){
+    if (width-30 < ball.get_ball_X() &&  width > ball.get_ball_X()  && posY < ball.get_ball_Y() && posY+160 > ball.get_ball_Y()) {
+      velocity_X = velocity_X * (-1) ;
+    }//}
   }
   float get_speed() {
     return velocity_X ;
@@ -63,19 +71,18 @@ class PongPaddle {
 }
 
 class PongBall {
-  float posX = 350, posY = 250, size = 50, velocity_Y = 0, velocity_X = 5;
+  float posX = 350, posY = 250, size = 50, velocity_Y = 0 ;
 
   PongBall() {
   }
 
   void move() {
-    //speed = PongPaddle.get_speed() ;
-    posX = posX + velocity_X ;
-
+    posX = posX - paddle1.get_speed() ;
+    //posY = posY + 2 ;
     //bounce X
-    if (posX > width-size || posX < 0+size) {
-      velocity_X = velocity_X * (-1) ;
-    }
+    //if (posX > width-size || posX < 0+size) {
+      //velocity_X = velocity_X * (-1) ;
+    //}
 
     //bounce Y
     if (posY > height-size || posY < 0+size) {
