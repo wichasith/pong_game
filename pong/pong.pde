@@ -22,8 +22,12 @@ void draw() {
   ball.move() ;
   game.draw() ;
   game.update() ;
+  //if (ball.get_ball_X() < width/2) {
   paddle1.bounce_ball() ;
+  //}
+  //if (ball.get_ball_X() > width/2) {
   paddle2.bounce_ball() ;
+  //}
 }
 
 
@@ -37,20 +41,27 @@ class PongPaddle {
 
   void draw(float posX, float size, float point ) {
     fill(255 ) ;
-
+    
+    this.posX = posX ;
+    
     //create paddle
-    rect(posX, this.posY, size, point) ;
+    rect(this.posX, this.posY, size, point) ;
+    
+    
   }
 
   void bounce_ball() {
-    //if(ball.get_ball_X() < width/2){
     if (posX < ball.get_ball_X() &&  posX+30 > ball.get_ball_X()  && posY < ball.get_ball_Y() && posY+160 > ball.get_ball_Y()) {
-      velocity_X = velocity_X * (-1) ;
-    }//}
-    //if(ball.get_ball_X() > width/2){
-    if (width-30 < ball.get_ball_X() &&  width > ball.get_ball_X()  && posY < ball.get_ball_Y() && posY+160 > ball.get_ball_Y()) {
-      velocity_X = velocity_X * (-1) ;
-    }//}
+      ball.velocity_X = ball.velocity_X * -1 ;
+    }
+    if (ball.get_ball_X() == 0 ) {
+      velocity_X = 5 ;
+      print("1") ;
+    }
+    if (ball.get_ball_X() == width ) {
+      velocity_X = 5 ;
+      print("1") ;
+    }
   }
   float get_speed() {
     return velocity_X ;
@@ -71,20 +82,15 @@ class PongPaddle {
 }
 
 class PongBall {
-  float posX = 350, posY = 250, size = 50, velocity_Y = 0 ;
+  float posX = 350, posY = 250, size = 50,velocity_X = 5 , velocity_Y = 2 ;
 
   PongBall() {
   }
 
   void move() {
-    posX = posX - paddle1.get_speed() ;
-    //posY = posY + 2 ;
-    //bounce X
-    //if (posX > width-size || posX < 0+size) {
-      //velocity_X = velocity_X * (-1) ;
-    //}
-
-    //bounce Y
+    posX = posX + velocity_X ;
+    posY = posY + velocity_Y ;
+    
     if (posY > height-size || posY < 0+size) {
       velocity_Y = velocity_Y * (-1) ;
     }
@@ -92,11 +98,19 @@ class PongBall {
 
   void draw() {
 
-    //create ball
     ellipse(posX, posY, size, size) ;
+    if (ball.get_ball_X() == 0 ) {
+      posX = 350 ;
+      posY = 250 ;
+    }
+    if (ball.get_ball_X() == width ) {
+      posX = 350 ;
+      posY = 250 ;
+    }
   }
 
   void change_move() {
+    velocity_X = velocity_X * (-1) ;
   }
 
   float get_ball_X() {
@@ -119,10 +133,12 @@ class PongGame {
   void update() {
     if (ball.get_ball_X() == 0 ) {
       score_player2 += 1 ;
+      
     }
     if (ball.get_ball_X() == width ) {
       score_player1 += 1 ;
     }
+    
   }
 
 
